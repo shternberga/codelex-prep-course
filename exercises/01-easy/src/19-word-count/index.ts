@@ -10,7 +10,23 @@
  */
 
 class Words {
-  count(str: string) {}
+  count(str: string)  {
+
+    let obj: any = {};
+    let arrayOfWords = str.toLowerCase().replace(/\s+$/, '').replace(/^\s+/, '').split(/\s+/);
+    
+    arrayOfWords.forEach(function(word: string){
+
+      if (!obj.hasOwnProperty(word) && word.length > 0){
+        obj[word] = 1;
+      } else {
+        obj[word]++;
+      }
+    });
+    return obj;
+  }
 }
 
 export { Words };
+
+

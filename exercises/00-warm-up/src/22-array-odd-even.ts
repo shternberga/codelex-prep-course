@@ -1,6 +1,23 @@
 export {};
 
-function goThroughNumbers(start, end) {}
+function isOdd(num: number): boolean { 
+    return num % 2 === 1; 
+}
+
+function goThroughNumbers(start: number, end: number): void {
+    if (start<=end){
+        for (let i = start; i <= end; i++) {
+            if (isOdd(i)) {
+                console.log (`> ${i} - odd`);
+            } else {
+                console.log (`> ${i} - even`);
+            }
+        }
+    } else {
+        console.log (`invalid input`);
+    } 
+
+}
 
 goThroughNumbers(3, 7);
 /* Expected output:

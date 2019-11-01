@@ -1,8 +1,7 @@
 export {};
 
-function multiply(a, b, c) {
-  a * b * c;
-  return;
+function multiply(a, b, c) {  
+  return a * b * c;
 }
 
 const result = multiply(1, 3, 4);

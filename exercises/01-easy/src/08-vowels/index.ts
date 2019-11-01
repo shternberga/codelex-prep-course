@@ -1,3 +1,5 @@
+import { switchCase } from "@babel/types";
+
 /**
  * Vowels
  *
@@ -9,6 +11,8 @@
  * vowels('Hello there!') === 4
  */
 
-function vowels(s: string) {}
+function vowels(s: string) {
+    return (s.match(/[aeiou]/gi) || []).length;
+}
 
 export { vowels };

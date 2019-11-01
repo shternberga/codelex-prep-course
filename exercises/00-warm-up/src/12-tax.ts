@@ -8,7 +8,10 @@ export {};
  */
 
 // You are allowed to change only this function
-function calculateSalesTax() {}
+function calculateSalesTax(price): number {
+    let tax = price * 0.21;
+    return +tax.toFixed(2);
+}
 
 const product = "You don't know JS";
 const price = 19.99;

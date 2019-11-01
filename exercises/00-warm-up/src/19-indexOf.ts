@@ -8,7 +8,12 @@ export {};
  */
 
 // You are allowed to edit only this function
-function remove(arr, valueToRemove) {}
+function remove(arr: any[], valueToRemove: any): any[] {
+  let index = arr.indexOf(valueToRemove);
+  return arr.filter(function (el, i) {
+    return index !== i;
+  });
+}
 
 const numbers = [1, 2, 3];
 const names = ["John", "Alice", "Ellen"];

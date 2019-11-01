@@ -45,6 +45,7 @@ class GameUI {
   private menuLink = elementById("menu-link");
   private menu = elementById("menu");
   private menuNew = elementById("menu-new");
+  
   private menuBeginner = elementById("menu-beginner");
   private menuIntermediate = elementById("menu-intermediate");
   private menuExpert = elementById("menu-expert");
@@ -55,9 +56,8 @@ class GameUI {
     this.windowWrapperOuter.addEventListener("contextmenu", e =>
       e.preventDefault()
     );
-    this.resetButton.addEventListener(
-      "mousedown",
-      () => (this.resetButton.className = "face-pressed")
+    this.resetButton.addEventListener("mousedown", () => 
+    (this.resetButton.className = "face-pressed")
     );
     this.resetButton.addEventListener("mouseup", () => {
       this.resetButton.className = "face-smile";
@@ -77,6 +77,8 @@ class GameUI {
     });
     this.menuNew.addEventListener("click", () => {
       this.minesweeper.reset();
+      this.windowWrapperOuter.style.width =
+      cellWidth * this.minesweeper.columnsCount() + 27 + "px";
       this.draw();
     });
     this.menuBeginner.addEventListener("click", () => {
@@ -98,10 +100,14 @@ class GameUI {
   }
 
   start() {
-    const windowWrapperOuter = elementById("window-wrapper-outer");
-    windowWrapperOuter.style.width =
+    // const windowWrapperOuter = elementById("window-wrapper-outer");
+    this.windowWrapperOuter.style.width =
       cellWidth * this.minesweeper.columnsCount() + 27 + "px";
-    this.draw();
+  setInterval(() => {
+      this.draw();
+      this.drawTimeCounter();
+   }, 1000)
+    
     elementById("game").style.display = "block";
   }
 
@@ -114,7 +120,7 @@ class GameUI {
         row.forEach((cell, j) => this.drawCell(minefield, cell, i, j))
       );
     this.drawResetButton();
-    this.drawCounters();
+    this.drawMinesCounter();
     this.drawMenu();
   }
 
@@ -144,7 +150,7 @@ class GameUI {
     this.resetButton.className = faceClassName(this.minesweeper);
   }
 
-  drawCounters() {
+  drawMinesCounter() {
     const fillCounter = (prefix: string, count: number) => {
       elementById(`${prefix}-hundreds`).className = `t${getHundreds(count)}`;
       elementById(`${prefix}-tens`).className = `t${getTens(count)}`;
@@ -152,6 +158,15 @@ class GameUI {
     };
 
     fillCounter("mine-count", this.minesweeper.minesLeftCount());
+  }
+
+  drawTimeCounter() {
+    const fillCounter = (prefix: string, count: number) => {
+      elementById(`${prefix}-hundreds`).className = `t${getHundreds(count)}`;
+      elementById(`${prefix}-tens`).className = `t${getTens(count)}`;
+      elementById(`${prefix}-ones`).className = `t${getOnes(count)}`;
+    };
+
     fillCounter("timer", this.minesweeper.timePassed());
   }
 

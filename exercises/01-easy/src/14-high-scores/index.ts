@@ -11,15 +11,18 @@ class HighScores {
   }
 
   get latest() {
-    return 0;
+    return this.scores[this.scores.length-1];
   }
 
   get personalBest() {
-    return 0;
+    let arr = this.scores;
+    return arr.sort(function(a, b){return b - a})[0];
   }
 
   get personalTopThree() {
-    return 0;
+    let arr = this.scores;
+    let n = arr.length < 3 ? arr.length : 3;
+    return arr.sort(function(a, b){return b - a}).slice(0, n);
   }
 }
 

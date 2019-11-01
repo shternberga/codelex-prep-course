@@ -1,7 +1,7 @@
 export {};
 
 function trimWord(word) {
-  return wordtrim();
+  return word.trim();
 }
 
 const result = trimWord("  CODELEX ");

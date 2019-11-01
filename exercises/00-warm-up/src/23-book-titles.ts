@@ -11,6 +11,8 @@ const books = [
   }
 ];
 
-const getTheTitles = () => {};
+const getTheTitles = (books) => {
+  return books.map(book => book.title);
+};
 
 console.log(getTheTitles(books)); // Expected output: ['4 hour work week', 'Tools of Titans']

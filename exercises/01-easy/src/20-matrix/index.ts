@@ -35,15 +35,60 @@
  */
 
 class Matrix {
-  constructor(private matrix: string) {}
+
+  rowsArr: any[];
+  columnsArr: any[];
+
+  constructor(private matrix: string) {
+    this.matrix = matrix;
+    this.rowsArr = this.setRows();
+    this.columnsArr = this.setColumns();
+  }
+
 
   get rows() {
-    return [];
+    return this.rowsArr;
   }
 
   get columns() {
-    return [];
+    return this.columnsArr;
   }
+
+  setRows() {
+    let rows: any[] = [];
+    let rowsArr = this.matrix.split(/\n/g);
+    for (let i = 0; i < rowsArr.length; i++) {
+      rows[i] = rowsArr[i].split(' ');
+      for (let index = 0; index < rows[i].length; index++) {
+        rows[i][index] = parseInt(rows[i][index]);        
+      }
+    }
+    return rows;
+  }
+
+  setColumns() {
+    let result: any[] = [];
+    for (let i = 0; i < this.rowsArr[0].length; i++) {
+      for (let index = 0; index < this.rowsArr.length; index++) {
+        if (this.rowsArr[index][i]) {
+          result[i] = result[i] || [];
+          result[i].push(this.rowsArr[index][i]);  
+        }      
+      }
+    }
+    return result;
+  }
+
+  // setColumns() {
+  //   let columns: any[] = [];
+  //   this.rowsArr.forEach(function (row) {
+  //     row.forEach(function (n: number, index: number) {
+  //       columns[index] = columns[index] || [];
+  //       columns[index].push(n);
+  //     });
+  //   });
+  //   return columns;
+  // }
 }
 
 export { Matrix };
