@@ -1,4 +1,5 @@
 import { Level } from "./levels";
+import { Storage } from "./APIlocalStorage";
 
 export class Cell {
   isOpen: boolean = false;
@@ -23,18 +24,26 @@ export class Minesweeper {
   ticks: number;
 
   constructor(level: Level) {
-    this.level = level;
+    this.level = Storage.getLevel() || level;
+    Storage.setLevel(this.level);
     this.cells = [];
-    this.columns = level.columns;
-    this.rows = level.rows;
-    this.mines = level.mines;
+    this.columns = this.level.columns;
+    this.rows = this.level.rows;
+    this.mines = this.level.mines;
     this.tense = false;
     this.questionMarksToggle = false;
-    this.setCells();
-    this.setMines();
-    this.setClues();
+    
+    if (!Storage.isEmpty()) {
+      this.cells = Storage.getCells();
+    } else {
+      this.setCells();
+      this.setMines();
+      this.setClues();
+      Storage.setCells(this.cells);
+    }
+
     this.gameIsStarted = false;
-    this.ticks = 0;
+    this.ticks = Storage.getTicks();
   }
 
   columnsCount(): number {
@@ -134,6 +143,7 @@ export class Minesweeper {
   onLeftMouseUp(x: number, y: number) {    
     this.tense = false;
     this.leftClick(x, y);
+    Storage.setCells(this.cells);
   }
 
   leftClick(x: number, y: number) {
@@ -173,6 +183,7 @@ export class Minesweeper {
       else if (!this.cells[x][y].isUnsure && !this.cells[x][y].isOpen) this.cells[x][y].isFlag = true;
     }   
     else this.cells[x][y].isFlag = this.cells[x][y].isFlag ? false : true;
+    Storage.setCells(this.cells);
   }
 
   isTense(): boolean {
@@ -182,7 +193,7 @@ export class Minesweeper {
   timePassed(): number {
     if (this.gameIsStarted && !this.isLost() && !this.isWon())
         this.ticks ++;
-
+    Storage.setTicks(this.ticks);
     return this.ticks;
   }
 
@@ -202,6 +213,8 @@ export class Minesweeper {
     this.setClues();
     this.gameIsStarted = false;
     this.ticks = 0;
+    Storage.setCells(this.cells);
+    Storage.setTicks(0);
   }
 
   currentLevel(): Level {
@@ -210,6 +223,7 @@ export class Minesweeper {
 
   selectLevel(level: Level) {
     this.level = level;
+    Storage.setLevel(this.level);
   }
 
   isLost(): boolean {
