@@ -62,6 +62,8 @@ class GameUI {
     this.resetButton.addEventListener("mouseup", () => {
       this.resetButton.className = "face-smile";
       this.minesweeper.reset();
+      this.windowWrapperOuter.style.width =
+      cellWidth * this.minesweeper.columnsCount() + 27 + "px";
       this.draw();
     });
     document.body.addEventListener("click", () => {
